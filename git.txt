@@ -1,0 +1,109 @@
+git 
+git config --global user.name "xxx"
+git config --global user.email xxxxx
+git config --list
+git config --global --list
+
+github
+	github.com
+	1.开源软件点击fork就会在自己的账户下复制那个项目
+	2.clone地址，然后在本地执行git clone xxxxx(网址)
+
+git checkout branch 切换分支
+git checkout -b branch 创建并切换分支
+git checkout  -b develop origin/master        // 创建并切换封装develop, 指向origin/master分支顶点端。
+git cherry-pick xxxx 用于把另一个本地分支的commit修改应用到当前分支。     xxxx(commitID)
+
+git push origin master:refs/for/mybranch (在local repository中找到名字为master的branch，用他去更新remote repository下面名字为mybranch的branch)
+	   
+	   
+重置（reset）一般用于重置暂存区(除非使用--hard参数，否则不重置工作区)，而检出（checkout）命令主要是覆盖工作区（如果<commt>不省略，也会替换暂存区中相应的文件）。
+	   git push origin master:refs/for/master
+
+（1丢弃B）	   
+----A---------B---------C----D---E-----F
+  start   discard     begin           end
+     
+	 git rebase --onto A B F   
+	 git rebase -i A  (然后去掉B的commit)
+ 	   
+	   
+（2 BC合并）
+----A---------B---------C----D---E-----F
+  start       begin    end
+  
+      git rebase -i A  (然后改C为squad)
+  
+  
+里程碑tag
+  git tag -m "xxx" name <commitID>创建
+  git tag -d name   删除
+  
+  
+ 分支管理branch
+	git branch name <start-point> 创建分支           （branch不能切换分支，需要checkout）
+	git branch -d name 检查name分支是否已经合并到其他分支，否则拒绝删除
+	git branch -D name 强制删除
+	git branch -m/-M oldname newname  重命名分支（拒绝/强制）
+	
+repo
+	repo init -u
+	repo sync 克隆或同步本地文件
+	repo start 实际上是对git checkout -b 命令的封装
+	
+	
+git rebase orign/master 和git merger的却别
+（原始结构）
+	c1--------c2---------c3--------c4（origin)
+	           -
+			     -------c5-------c6(develop)
+				 
+(rebase后的结构)
+	c1--------c2---------c3--------c4(origin)
+	                                 -
+			                          -------c5-------c6(develop)
+(merger后的结构)
+	c1--------c2---------c3--------c4(origin)
+	            --                     --
+			      -------c5-------c6     -
+				                    - ----c7(develop)
+								
+  新修改
+git status  
+git add (files| -A) 
+git commit -m "commit msg"
+git push origin (local):refs/for/
+git push origin master:refs/for/master
+
+// 打印log日志
+git log
+
+git reset --soft cc073c2bf9a3517681b825eb0b51abdf6b6d20d6
+
+// 追加修改
+git add -A
+
+git commit --amend 
+
+新修改
+git status  
+git add (files| -A) 
+git commit -m "commit msg"
+git push origin (local):refs/for/
+git push origin master:refs/for/master
+
+// 打印log日志
+git log
+
+git reset --soft cc073c2bf9a3517681b825eb0b51abdf6b6d20d6
+
+// 追加修改
+[ git rebase -i xxxxx ]  xxxxx是要修改的前一个的commit
+
+git add -A
+
+git commit --amend 
+
+[ git rebase --continue ]
+
+git push origin master:refs/for/master
