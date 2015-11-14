@@ -1,0 +1,3 @@
+可以调试系统命令
+	apt-get source coreutils
+	sudo apt-get install coreutils-dbgsym
